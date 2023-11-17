@@ -1,5 +1,7 @@
 # HitchHiker API Requirements
 
+(See sub-folders for implementations & relevant README docs)
+
 ## Store Metrics on WiFi Router
 
 - **Objective:** Store metrics on WiFi Router USB storage.
@@ -52,3 +54,9 @@
 ## Testing Environment
 
 - **~~Test on OpenWRT:** Use an OpenWRT virtual machine for testing.~~
+
+---
+
+## LICENSE
+
+Apache 2.0
