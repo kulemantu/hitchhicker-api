@@ -1,0 +1,30 @@
+version: "3"
+services:
+  api:
+    build: .
+    container_name: hitchhiker-api
+    networks:
+      - hitchnet
+
+  caddy:
+    image: caddy:latest
+    container_name: caddy-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - api
+    networks:
+      - hitchnet
+
+networks:
+  hitchnet:
+    external: true
+
+volumes:
+  caddy_data:
+  caddy_config:
