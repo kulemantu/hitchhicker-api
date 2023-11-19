@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package hitchhikersource;
+
+// The HitchhikerSource service provides functionalities to manage and transfer files.
+service HitchhikerSource {
+    // Returns a unique SourceId for the client.
+    rpc GetSourceId(EmptyRequest) returns (SourceIdResponse);
+
+    // Retrieves a list of available downloads for a given ClientId and DestinationId.
+    rpc GetDownloads(DownloadRequest) returns (FileListResponse);
+
+    // Allows a client to download a list of files by their IDs.
+    rpc DownloadFile(DownloadFileRequest) returns (FileResponse);
+
+    // Confirms the delivery of a list of files, marking them as delivered.
+    rpc MarkDelivered(DeliveryConfirmation) returns (DeliveryResponse);
+}
+
+// Request and response messages.
+message EmptyRequest {}
+
+message SourceIdResponse {
+    string sourceId = 1;
+}
+
+message DownloadRequest {
+    string clientId = 1;
+    string destinationId = 2;
+}
+
+// Response with a list of files available for download.
+message FileListResponse {
+    repeated File file = 1;
+}
+
+// Request to download a list of files identified by their IDs.
+message DownloadFileRequest {
+    string clientId = 1;
+    repeated string fileIds = 2; // List of file IDs for download.
+}
+
+// Response containing the requested files.
+message FileResponse {
+    repeated File files = 1;
+}
+
+// Confirmation of file delivery.
+message DeliveryConfirmation {
+    string clientId = 1;
+    string destinationId = 2;
+    repeated string fileIds = 3; // List of file IDs that were delivered.
+}
+
+// Response after marking files as delivered.
+message DeliveryResponse {
+    bool success = 1;
+    string message = 2; // Additional status message or error information.
+}
+
+// File structure definition.
+message File {
+    string fileid = 1; // md5 sum as the file identifier.
+    string filename = 2;
+    string type = 3;
+    bytes blob = 4; // File content, consider streaming for large files.
+}
