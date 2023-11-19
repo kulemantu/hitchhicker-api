@@ -1,3 +1,4 @@
-localhost {
-    reverse_proxy api:5050
+countly.data.befit.mw {
+    tls /etc/caddy/certs/countly.data.befit.mw.pem /etc/caddy/certs/countly.data.befit.mw-key.pem
+    reverse_proxy api:5000
 }

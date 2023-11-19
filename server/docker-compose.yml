@@ -5,6 +5,8 @@ services:
     container_name: hitchhiker-api
     networks:
       - hitchnet
+    ports:
+      - "5005:5000"
 
   caddy:
     image: caddy:latest
@@ -13,7 +15,8 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./certs/:/etc/caddy/certs
       - caddy_data:/data
       - caddy_config:/config
     depends_on:

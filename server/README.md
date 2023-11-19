@@ -1,4 +1,4 @@
-# HitchHiker Flask API
+# MetricsCentral HitchHiker API
 
 This README outlines the steps to set up and run the Flask application both locally using a Python virtual environment and with Docker using Caddy as a reverse proxy.
 
@@ -47,7 +47,7 @@ This README outlines the steps to set up and run the Flask application both loca
    ```
 
 5. **Access the Application**  
-   Open `http://localhost:5050` in your web browser.
+   Open `http://localhost:5000` in your web browser.
 
 6. **Deactivate the Virtual Environment**  
    When you're done, you can deactivate the virtual environment:
