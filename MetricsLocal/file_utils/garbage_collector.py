@@ -1,3 +1,17 @@
+"""
+garbage_collector.py
+--------------------
+
+This module provides functionality for managing storage space in a directory by
+garbage collecting older files. It is designed to keep the total size of files in
+a specified directory below a defined threshold by removing the oldest files first.
+
+Example Usage:
+--------------
+from file_utils import garbage_collector
+garbage_collector(100, '/path/to/metrics') # Adjust the path and size limit as needed
+"""
+
 import os
 import logging
 from pathlib import Path
@@ -6,11 +20,26 @@ from pathlib import Path
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def garbage_collector(max_storage_mb, directory):
-    """
+   """
     Garbage collects files in the specified directory to maintain a maximum storage size.
 
-    :param max_storage_mb: Maximum storage size in megabytes
-    :param directory: Path to the directory containing the files
+    This function calculates the total size of files in the given directory. If the total
+    size exceeds the specified maximum storage size, it deletes the oldest files first
+    until the total size is within the limit.
+
+    Parameters:
+    max_storage_mb (int): Maximum storage size in megabytes.
+    directory (str): Path to the directory containing the files.
+
+    Side Effects:
+    - Deletes files from the filesystem.
+    - Logs actions and errors to the console.
+
+    Returns:
+    None
+
+    Raises:
+    Exception: Describes any exceptions that are caught during the execution of the function.
     """
 
     # Convert MB to bytes for size comparison
@@ -39,6 +68,3 @@ def garbage_collector(max_storage_mb, directory):
 
     except Exception as e:
         logging.error(f"An error occurred: {e}")
-
-# Example usage
-# garbage_collector(100, '/path/to/metrics')  # Adjust the path as needed
