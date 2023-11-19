@@ -166,3 +166,7 @@ cython_debug/
 *.img
 *.img.gz
 *.vdi
+
+# Don't store certificates
+*.pem
+*.crt
