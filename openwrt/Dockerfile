@@ -7,6 +7,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Set file path for python script
 ENV FLASK_APP=../server/app.py
 
+# Set file path for OpenWrt image
+ENV OPENWRT_IMAGE=openwrt-image.img
+
 # Update system and install specific version of QEMU
 # Replace 'x.x.x' with the desired version number
 RUN apt-get update && \
@@ -21,29 +24,34 @@ COPY openwrt-image.img /opt/
 # Set up networking configuration
 # This example sets up user-mode networking with port forwarding
 CMD ["qemu-system-x86_64", \
-     "-hda", "/opt/openwrt-image.img", \
+     "-hda", "/opt/${OPENWRT_IMAGE}", \
      "-boot", "c", \
      "-m", "512", \
      "-net", "nic", \
      "-net", "user,hostfwd=tcp::8080-:80,hostfwd=tcp::2222-:22"]
 
+# Health check to ensure the container is running properly
+# Replace 'your_health_check_command' with an appropriate command
+HEALTHCHECK --interval=60s --timeout=15s --retries=3 \
+  CMD opkg list-installed || exit 1
+
 # Create a volume for persistent OpenWrt data
 VOLUME /opt/openwrt-data
 
-# Expose ports for SSH and HTTP
-EXPOSE 8080 2222 80 22
+# # Expose ports for SSH and HTTP
+# EXPOSE 8080 2222 80 22
 
-# Update opkg
-RUN opkg update
+# # Update opkg
+# RUN opkg update
 
-# Install Python and PIP package
-RUN opkg install python3 python3-pip
+# # Install Python and PIP package
+# RUN opkg install python3 python3-pip
 
-# Install Flask
-RUN pip3 install flask
+# # Install Flask
+# RUN pip3 install flask
 
-# Copy the Python script via ENV into the container
-COPY ${FLASK_APP} /opt/server
+# # Copy the Python script via ENV into the container
+# COPY ${FLASK_APP} /opt/server
 
-# Run the Python script
-RUN python3 /opt/server/app.py
+# # Run the Python script
+# RUN python3 /opt/server/app.py

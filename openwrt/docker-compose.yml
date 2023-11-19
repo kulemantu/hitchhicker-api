@@ -10,7 +10,7 @@ services:
     volumes:
       - openwrt_data:/opt/openwrt-data
     healthcheck:
-      test: ["CMD", "your_health_check_command"]
+      test: ["CMD", "opkg", "list-installed"]
       interval: 60s
       timeout: 15s
       retries: 3
