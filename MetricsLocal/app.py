@@ -1,4 +1,8 @@
+import os
 from flask import Flask, request
+
+max_storage_mb = int(os.getenv('MAX_STORAGE_MB'))
+directory_path = os.getenv('DIRECTORY_PATH')
 
 app = Flask(__name__)
 
